@@ -9,9 +9,88 @@
 </head>
 <body>
    <py-script>  
-   a = int(input("ZAHL"))
-   b = int(input("ZAHL 2"))
-   print(a+b)
+   def roulette_1():
+    global money
+    try:
+        money = money
+    except NameError:
+        money = 100
+    if money <= 0:
+        print("You don't have enough money to play!")
+        quit()
+    play = True 
+    while play:
+        global guess
+        guess = True
+        rolled_color_ = "black"
+        what_guess = "invalid"
+        global number_guess
+        number_guess = 102
+        global bet
+        guess = True
+        global bets
+        bets = True
+        while bets:
+            bet = int(input("How much do you want to bet? You have: " + str(money) + " dollars  "))
+            if bet > money:
+                print("You don't have enough money for that bet!")
+                bets = True
+            else:
+                bets = False
+        while guess:
+            what_guess: str = input("number or color?  ")
+            print(what_guess)
+            if what_guess == str("number"):
+                number_guess = int(input("What is your Number Guess?  "))
+                guess=False
+                color_guess = False
+                if number_guess > 100 or number_guess < 0:
+                    print("invalid number guess")
+                    guess=True
+            
+            elif what_guess == str("color"):
+                color_guess = str(input("What is your color guess?  "))
+                guess=False
+                number_guess = False
+                if color_guess != str("black"):
+                    if color_guess != str("red"):
+                        print("invalid color guess")
+                        guess=True
+            else: 
+                print("invalid input")
+        
+        rolled_number = random.randint(0,100)
+        rolled_color_ = random.randint(1,2)
+        if rolled_color_ == 1:
+            rolled_color_: str = str("black")
+        else:
+            rolled_color_: str = str("red")
+        if rolled_color_ == color_guess and what_guess == str("color"):
+            money = money + bet
+            print("You chose the correct Color! :D")
+            print("You have: ",money," dollars")    
+        elif what_guess == str("color"):
+            money = money - bet
+            print("You chose the wrong Color! :(")
+            print("The color was: ",rolled_color_)
+            print("You have: ",money," dollars")
+        if number_guess == rolled_number and what_guess == str("number"):
+            print("YOU CHOSE THE CORRECT NUMBER! WELL DONE!")
+            money = money + bet * 100
+            print("You have: ",money," dollars")
+        elif what_guess == str("number"):
+            money = money - bet
+            print("Wrong Number")
+            print("The number was: ",rolled_number)
+            print("You have: ",money," dollars")
+        play_again = str(input("Do you want to play again?  "))
+        if play_again == str("yes") or str("y"):
+            roulette_1()
+        else:
+            print("Thank you for playing!")
+            play = False
+            quit()
+      roulette_1()
    </py-script>
 </body>
 </html>
